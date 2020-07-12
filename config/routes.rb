@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get 'sessons/new'
   root 'static_pages#top'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
+  # ログイン機能
+  get   '/login', to: 'sessons#new'
+  post  '/login', to: 'sessons#create'
+  delete '/logout', to: 'sessons#destroy'
 end
