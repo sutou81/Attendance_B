@@ -1,3 +1,4 @@
+<% provide(:title, "Login") %>
 <div class="container">
   <div class="center">
     <h1>ログイン</h1>
@@ -5,16 +6,16 @@
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
       <%= form_with(scope: :session, url: login_path, local: true) do |f| %>
-        <%= f.label :email, class:"label-login" %>
+        <%= f.label :email, t(:email), class:"label-login" %>
         <%= f.email_field :email, class:"form-control"  %>
         
-        <%= f.label :password, class:"label-login" %>
+        <%= f.label :password, t(:password), class:"label-login" %>
         <%= f.password_field :password, class:"form-control"  %>
         
         <%= f.submit "ログイン", class:"btn btn-block btn-primary btn-login" %>
       <% end %>
       <p>アカウント作成は<%= link_to "こちら", signup_path %>から</p>
     </div>
-  </div>S
+  </div>
 
 </div>
