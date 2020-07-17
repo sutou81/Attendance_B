@@ -8,6 +8,7 @@ ja:
           has_many: "%{record}が存在しているので削除できません"
   email: メールアドレス
   password: パスワード
+  account: アカウント
   date:
     abbr_day_names:
     - 日
@@ -204,6 +205,7 @@ ja:
     am: 午前
     formats:
       default: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
+      custom: "%Y年%m月"
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
       time: "%H：%M"
