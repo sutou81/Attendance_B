@@ -14,6 +14,11 @@
         <%= f.label :password, t(:password), class:"label-login" %>
         <%= f.password_field :password, class:"form-control"  %>
         
+        <%= f.label :remember_me, class: "checkbox inline checkbox-login", for: "remember-me" do %>
+          <%= f.check_box :remember_me, id: "remember-me" %>
+          <span>ログイン情報を記憶する</span>
+        <% end %>
+      
         <%= f.submit "ログイン", class:"btn btn-block btn-primary btn-login" %>
       <% end %>
       <p>アカウント作成は<%= link_to "こちら", signup_path %>から</p>
