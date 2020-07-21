@@ -66,9 +66,30 @@ module SessionsHelper
   
   def logged_in_user
     unless logged_in?
+     store_location
      flash[:danger] = "ログインして下さい。"
      redirect_to login_url
     end
+  end
+  
+  # アクセスしたユーザーが現在ログインしているユーザーか確認します。
+  # current_userで現在ログインしているユーザーの情報を取得可
+  # 上記とアクセスしたユーザー(@user)が同一人物か確認
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless @user == current_user
+  end
+  
+  # 下記のメソッドでアクセスしｔURLを記憶した上で
+  # 記憶しているURL(またはデフォルトURL) にリダイレクトします。
+  # session.delete→一時的セッションを破棄→そうしないと次回ログイン時にも記憶されているURLに転送されてしまう
+  def redirect_back_or(default_url)
+    redirect_to(session[:fowarding_url] || default_url)
+    session.delete(:fowarding_url)
+  end
+  # アクセスしようとしたURLを記憶します。
+  def store_location
+    session[:fowarding_url] = request.original_url if request.get?
   end
     
 end

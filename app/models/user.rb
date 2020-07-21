@@ -9,7 +9,13 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: true    
+                    uniqueness: true  
+  # inオプションを指定:「2文字以上かつ30文字以下」という検証を追加することができます。
+  # allow_blank: true→空文字""の場合バリデーションをスルー
+  # 上記の続き:存在性の検証を入れていないことから、空の状態で送信し、2文字上の検証に引っかからないようにするために追加
+  validates :department, length: {in: 2..30}, allow_blank: true                  
+  # allow_nil:これでは新規作成の時もパスワードのバリデーションがスルーされてしまうのでは？
+  # has_secure_passwordがオブジェクト生成時に存在性を検証するようになっています。
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   
