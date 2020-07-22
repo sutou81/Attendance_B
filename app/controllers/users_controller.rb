@@ -8,6 +8,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
   
+  def index
+    @user = User.paginate(page: params[:page]).search(params[:search])
+  end
+  
+  
   def show
   end
   

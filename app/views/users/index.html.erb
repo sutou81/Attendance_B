@@ -1,3 +1,4 @@
+<%= provide(:title, "All Users") %>
 <div class="container">
   <h1>全てのユーザー</h1>
   <div class="row">
@@ -5,9 +6,43 @@
       <div class="col-md-4 col-md-offset-8",style="display:inline;">
         <%= form_with(url:users_path, method: :get, local:true) do |f| %>
           <span><%= f.label:search,"ユーザー名検索" %></span>
-          <span style="display:inline;"><%= f.text_field:search, class: "form-control" %><%= f.submit "検索", class: "btn btn-primary" %></span>
+          <span style="display:inline;"><%= f.text_field:search, placeholder:"キーワードを入力…", class: "form-control" %><%= f.submit "検索", class: "btn btn-primary" %></span>
         <% end %>
       </div>
     </div>
+    <div class="col-md-10 col-md-offset-1">
+      <%= will_paginate @user %>
+      <table class="table table-condensed table-hover" id="table-users">
+        <thead>
+          <tr>
+            <th><%= User.human_attribute_name :name %></th>
+            <th class="center"><%= User.human_attribute_name :department %></th>
+            <th class="center"><%= User.human_attribute_name :basic_time %></th>
+            <th class="center"><%= User.human_attribute_name :work_time %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <% @user.each do |user| %>
+          <tr>
+            <td><%= link_to user.name, user_path(user) %></td>
+            <td class="center"><%= user.department %></td>
+            <td class="center"><%= format_basic_info(user.basic_time) %></td>
+            <td class="center"><%= format_basic_info(user.work_time) %></td>
+            <td class="center">
+              <% unless user.admin? %>
+                <%= link_to "基本情報編集", edit_basic_info_user_path(user), remote: true, class:"btn btn-success" %>
+                <%= link_to "削除", user, method: :delete,
+                  data: { confirm: "削除してよろしいですか？" },
+                  class: "btn btn-danger" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>  
+      </table>
+      <%= will_paginate @user %>
+    </div>
   </div>
 </div>
+
+<!-- モーダルウインドウ表示 -->
+<div id="edit_basic_info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

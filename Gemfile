@@ -4,6 +4,9 @@ gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 gem 'bcrypt' # パスワードをハッシュ化する物です
 gem 'rails-i18n' # 日本語化するための物
 gem 'bootstrap-sass' # bootstrap導入
+gem 'will_paginate' # この行を追加してください。
+gem 'bootstrap-will_paginate' # この行を追加してください。
+gem 'faker'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
