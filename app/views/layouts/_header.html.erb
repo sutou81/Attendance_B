@@ -6,7 +6,9 @@
         <li><%= link_to "トップ", root_path %></li>
         
         <% if current_user? %>
-          <li><%= link_to "ユーザー一覧", users_path %></li>
+          <% if current_user.admin? %>
+            <li><%= link_to "ユーザー一覧", users_path %></li>
+          <% end %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <%= t(:account) %><b class="caret"></b>

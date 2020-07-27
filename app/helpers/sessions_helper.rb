@@ -77,8 +77,23 @@ module SessionsHelper
   # 上記とアクセスしたユーザー(@user)が同一人物か確認
   def correct_user
     @user = User.find(params[:id])
-    redirect_to(root_url) unless @user == current_user
+    unless @user == current_user
+      flash[:danger] = "閲覧権限がありません。"
+      redirect_to(root_url) 
+    end
   end
+  
+  # 一般ユーザーがUrlを打ち込んで、他の勤怠ページにアクセスするのを制限
+  def show_access_limit
+    @user = User.find(params[:id])
+    if !current_user.admin?
+      unless @user == current_user
+        flash[:danger] = "閲覧権限がありません。"
+        redirect_to(root_url) 
+      end
+    end
+  end
+  
   
   # 下記のメソッドでアクセスしｔURLを記憶した上で
   # 記憶しているURL(またはデフォルトURL) にリダイレクトします。
@@ -91,5 +106,16 @@ module SessionsHelper
   def store_location
     session[:fowarding_url] = request.original_url if request.get?
   end
-    
+   
+  # システム管理権限所有かどうか判定します。deleteメソッドで使用
+  # (閲覧権限を規制するのにも使用→一般ユーザーがユーザー一覧の閲覧制限(urlを打ち込んで))
+  # current_page?(users_path)→以下のように、current_page?メソッドを用いることによって、表示中のページのパスを判定できる
+  def admin_user
+    unless current_user.admin?
+      if current_page?(users_path)
+        flash[:danger] = "閲覧権限がありません。"
+      end
+      redirect_to root_url
+    end
+  end 
 end

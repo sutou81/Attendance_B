@@ -53,3 +53,18 @@
     vertical-align: middle;
   }  
 }
+
+/* モーダールのボタン */
+.btn-basic-info {
+    margin: 15px 0;
+    width: 30%;
+}
+
+/* 土日に文字色を変える */
+.sat {
+  color: blue;
+}
+
+.sun {
+  color: red;
+}

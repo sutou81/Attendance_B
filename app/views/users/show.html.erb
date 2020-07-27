@@ -50,7 +50,12 @@
         <% @one_month.each do |day| %>
         <tr>
           <td><%= l(day, format: :short) %></td>
-          <td><%= $days_of_the_week[day.wday] %></td>
+          <% if day.wday == 6
+               x = "sat"
+             elsif day.wday == 0
+               x = "sun"
+             end %>
+          <td class="<%= x %>"><%= $days_of_the_week[day.wday] %></td>
           <td></td>
           <td></td>
           <td></td>

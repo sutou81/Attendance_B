@@ -13,7 +13,9 @@ class User < ApplicationRecord
   # inオプションを指定:「2文字以上かつ30文字以下」という検証を追加することができます。
   # allow_blank: true→空文字""の場合バリデーションをスルー
   # 上記の続き:存在性の検証を入れていないことから、空の状態で送信し、2文字上の検証に引っかからないようにするために追加
-  validates :department, length: {in: 2..30}, allow_blank: true                  
+  validates :department, length: {in: 2..30}, allow_blank: true
+  validates :basic_time, presence: true
+  validates :work_time, presence: true
   # allow_nil:これでは新規作成の時もパスワードのバリデーションがスルーされてしまうのでは？
   # has_secure_passwordがオブジェクト生成時に存在性を検証するようになっています。
   has_secure_password
@@ -74,6 +76,7 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
   
+  # 検索メソッド→あいまい検索か全てのユーザー一覧か
   def self.search(search)
     if search
       User.where(['name LIKE ?', "%#{search}%"]) 

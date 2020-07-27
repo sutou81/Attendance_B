@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
+  include ActionView::Helpers::UrlHelper
   # %w{日 月 火 水 木 金 土}はRubyのリテラル表記と呼ばれるものです。
   # ["日", "月", "火", "水", "木", "金", "土"]の配列と同じように使えます。
   # $変数名 →グローバル変数 グローバル変数は極端に言うとプログラムのどこからでも呼び出すことのできる変数で
