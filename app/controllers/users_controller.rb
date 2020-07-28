@@ -52,11 +52,23 @@ class UsersController < ApplicationController
   
   # @user.errors.full_messagesは配列のため、joinメソッドを使って要素ごとに「、」で区切るよう指定しています。これでひとまず更新失敗時に動作するはずです。
   def update_basic_info
-    if @user.update_attributes(basic_info_params)
-      flash[:success] = "#{@user.name}の基本情報を更新しました"
-    else
-      flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
-    end
+      if @user.admin? && params[:user][:checkbox] == '0'
+        if @user.update_attributes(basic_info_params) 
+          @user = User.all
+          @user.each do |user|
+            user.update_attributes(basic_info_params)
+          end
+          flash[:success] = "全ユーザーの基本情報を更新しました。"
+        else
+          flash[:danger] = "全ユーザーの更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+        end
+      elsif !@user.admin? || params[:user][:checkbox] == '1'
+        if @user.update_attributes(basic_info_params)
+          flash[:success] = "#{@user.name}の基本情報を更新しました"
+        else
+        flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+        end
+      end
     redirect_to users_url
   end
   

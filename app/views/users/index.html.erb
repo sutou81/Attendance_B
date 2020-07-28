@@ -25,7 +25,7 @@
         <% @user.each do |user| %>
           <tr>
             <td><%= link_to user.name, user_path(user) %></td>
-            <td class="center"><%= user.department %></td>
+            <td class="center"><%= user.department.present? ? user.department : "未所属" %></td>
             <td class="center"><%= format_basic_info(user.basic_time) %></td>
             <td class="center"><%= format_basic_info(user.work_time) %></td>
             <td class="center">

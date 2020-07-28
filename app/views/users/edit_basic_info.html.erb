@@ -1,0 +1,24 @@
+<% provide(:title, "基本情報の更新") %>
+<div class="container">
+  <h1 class="center">基本情報の更新</h1>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= form_with(model:@user, url: update_basic_info_user_path(@user), local:true, method: :patch) do |f| %>
+        <%= render 'shared/error_messages', object: @user %>
+        
+        <%= f.label:basic_time, class:"label-basic-info" %>
+        <%= f.time_field:basic_time, class:"form-control" %>
+        
+        <%= f.label:work_time, class:"label-basic-info" %>
+        <%= f.time_field:work_time, class:"form-control" %>
+        
+        <div class="field margin">
+          <%= f.check_box :checkbox %>
+          <span>管理者のみ更新</span>
+        </div>
+        
+        <%= f.submit "更新", class:"btn btn-primary btn-block btn-basic-info"%>
+      <% end %>
+    </div>
+  </div>
+</div>
