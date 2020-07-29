@@ -38,27 +38,31 @@
           <th rowspan="2">備考</th>
         </tr>
         <tr>
+          <th>出勤登録</th>
           <th>時</th>
           <th>分</th>
-          <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
           <th>時</th>
           <th>分</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <% @one_month.each do |day| %>
+        <% @attendances.each do |day| %>
         <tr>
-          <td><%= l(day, format: :short) %></td>
-          <% if day.wday == 6
+          <td><%= l(day.worked_on, format: :short) %></td>
+          <% if day.worked_on.wday == 6
                x = "sat"
-             elsif day.wday == 0
+             elsif day.worked_on.wday == 0
                x = "sun"
              end %>
-          <td class="<%= x %>"><%= $days_of_the_week[day.wday] %></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td class="<%= x %>"><%= $days_of_the_week[day.worked_on.wday] %></td>
+          <td>
+            <% if (Date.current == day.worked_on) && day.started_at.nil? %>
+              <%= link_to "出勤登録", user_attendance_path(@user, day), method: :patch, class:"btn btn-primary btn-attendance" %>
+            <% end %>  
+          </td>
+          <td><%= l(day.started_at, format: :time1) if day.started_at.present? %></td>
+          <td><%= l(day.started_at, format: :time2) if day.started_at.present? %></td>
           <td></td>
           <td></td>
           <td></td>

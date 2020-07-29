@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  # attendanceモデルとの関係性1人のユーザーに対して、attendanceのレコードは多→1：多の関係性を示すもの
+  # ↑の理由から複数形(attendances)
+  has_many :attendances, dependent: :destroy
   # 「remember_token」という仮想の属性を作成します。
   # has_secure_passwordでは自動的にpasswordカラムを仮想属性として扱えるようにする→
   # →機能がありましたが、今回はそのような機能はありません。それが、attr_accessor :remember_token
