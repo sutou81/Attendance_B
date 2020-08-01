@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
     Date.current.beginning_of_month : params[:date].to_date
     @last_day = @first_day.end_of_month
     @one_month = [*@first_day..@last_day] 
+    @count = [*1..@one_month.count]
     # ↓1ヶ月分のユーザーに紐付く勤怠データを検索し取得する　それを＠attendancesに入れてる
     @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
     

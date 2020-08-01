@@ -94,6 +94,9 @@ module SessionsHelper
     end
   end
   
+  def set_user
+    @user = User.find(params[:id])
+  end
   
   # 下記のメソッドでアクセスしｔURLを記憶した上で
   # 記憶しているURL(またはデフォルトURL) にリダイレクトします。

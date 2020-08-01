@@ -24,7 +24,7 @@
     </table>
   </div>
   <div class="btn-user-show">
-    <%= link_to "勤怠を編集", '#', class:"btn btn-success" %>
+    <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class:"btn btn-success" %>
   </div>
   <div>
     <table class="table table-bordered table-condensed table-hover table-striped " id="table-attendances">
@@ -71,7 +71,7 @@
               <% @todal_working_times = @todal_working_times.to_f + str_times.to_f %>
             <% end %>
           </td>
-          <td></td>
+          <td><%= day.note %></td>
         </tr>
         <% end %>
       </tbody>

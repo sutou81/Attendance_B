@@ -1,0 +1,74 @@
+<% provide(:title, @user.name) %>
+<%= form_with(model: @user, url: attendances_update_one_month_user_path(date: @first_day), local: true, method: :patch) do |f| %>
+  <div>
+    <h1>勤怠編集画面</h1>
+    <table class="table table-bordered table-condensed table-hover" id="table-attendances">
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>曜日</th>
+          <th>出勤時間</th>
+          <th>退勤時間</th>
+          <th>在社時間</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbodY>
+        <% @attendances.zip(@count) do |day, cou| %>
+          <%= f.fields_for "attendances[]", day do |attendance| %>
+            <tr>
+              <td><%= l(day.worked_on, format: :short) %></td>
+              <% if day.worked_on.wday == 6
+                   x = "sat"
+                 elsif day.worked_on.wday == 0
+                   x = "sun"
+                 end %>
+              <td class="<%= x %>"><%= $days_of_the_week[day.worked_on.wday] %></td>
+              <td><%= attendance.time_field :started_at, class:"form-control", id: "sample#{cou}" %></td>
+              <td><%= attendance.time_field :finished_at, class:"form-control", id: "example#{cou}",:onChange=>"javascript: func1();" %></td>
+              <td>
+                <% if day.started_at.present? && day.finished_at.present? %>
+                　
+                  <span id="result<%= cou %>"><%= working_times(day.started_at, day.finished_at) %></span>
+                <% else %>
+                  <script>func2()</script>
+                  <span id="result<%= cou %>"></span>
+                <% end %>
+                <script language="javascript" type="text/javascript">
+                    function func1() {
+                      var from_time = document.getElementById("sample<%= cou %>").value;
+                      var to_time = document.getElementById("example<%= cou %>").value;
+                      var [from_hour, from_minute] = from_time.split(':');
+                      var [to_hour, to_minute] = to_time.split(':');
+                      document.getElementById("result<%= cou %>").innerHTML = (to_hour - from_hour + (to_minute - from_minute) / 60.0).toFixed(2);
+                    }
+                      document.getElementById("example<%= cou %>").onchange = func1;
+                </script>
+  
+              </td>
+              <td><%= attendance.text_field :note, class:"form-control" %></td>
+            </tr>
+          <% end %>
+        <% end %>  
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="center">
+    <%= f.submit "まとめて更新", class: "btn btn-lg btn-primary" %>
+    <%= link_to "キャンセル", user_path(date:@first_day), class:"btn btn-lg btn-default" %>
+  </div>
+<% end %>
+<script language="javascript" type="text/javascript">
+                    function func1() {
+                      var from_time = document.getElementById("sample1").value;
+                      var to_time = document.getElementById("example1").value;
+                      var [from_hour, from_minute] = from_time.split(':');
+                      var [to_hour, to_minute] = to_time.split(':');
+                      document.getElementById("result").innerHTML = (to_hour - from_hour + (to_minute - from_minute) / 60.0).toFixed(2);
+                    }
+                    
+                    function func2() {
+                      document.getElementById("example1").onchange = func1;
+                    }
+</script>
