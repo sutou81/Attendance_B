@@ -24,8 +24,13 @@
                    x = "sun"
                  end %>
               <td class="<%= x %>"><%= $days_of_the_week[day.worked_on.wday] %></td>
-              <td><%= attendance.time_field :started_at, class:"form-control", id: "sample#{cou}" %></td>
-              <td><%= attendance.time_field :finished_at, class:"form-control", id: "example#{cou}",:onChange=>"javascript: func1();" %></td>
+              <% if !current_user.admin? && (Date.current < day.worked_on) %>
+                <td><%= attendance.time_field :started_at, readonly: true, class:"form-control", id: "sample#{cou}" %></td>
+                <td><%= attendance.time_field :finished_at, readonly: true, class:"form-control", id: "example#{cou}",:onChange=>"javascript: func1();" %></td>
+              <% else %>
+                <td><%= attendance.time_field :started_at, class:"form-control", id: "sample#{cou}" %></td>
+                <td><%= attendance.time_field :finished_at, class:"form-control", id: "example#{cou}",:onChange=>"javascript: func1();" %></td>
+              <% end %> 
               <td>
                 <% if day.started_at.present? && day.finished_at.present? %>
                 　
@@ -59,6 +64,16 @@
     <%= link_to "キャンセル", user_path(date:@first_day), class:"btn btn-lg btn-default" %>
   </div>
 <% end %>
+<script>
+setTimeout( function(){
+    if (window.name != "test") {
+        location.reload();
+        window.name = "test";
+    } else {
+        window.name = "";
+    }
+}, 3000);
+</script>
 <script language="javascript" type="text/javascript">
                     function func1() {
                       var from_time = document.getElementById("sample1").value;

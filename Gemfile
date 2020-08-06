@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
+gem 'rounding' # 時間を丸めるもの　今回は15分単位で
 gem 'bcrypt' # パスワードをハッシュ化する物です
 gem 'rails-i18n' # 日本語化するための物
 gem 'bootstrap-sass' # bootstrap導入

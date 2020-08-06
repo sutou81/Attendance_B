@@ -4,10 +4,11 @@
     <table class="table table-bordered table-condensed user-table">
       <tbody>
         <tr>
-          <td><%= link_to "◀", user_path(date: @first_day.prev_month), class:"btn btn-primary" %>
+          <td><%= link_to "◀", user_path(date: @first_day.prev_month), class:"btn btn-primary", id:"click1" %>
           　<%= l(@first_day, format: :middle) %>
           時間管理表　
-          <%= link_to "▶", user_path(date: @first_day.next_month), class:"btn btn-primary" %></td>
+          <%= link_to "▶", user_path(date: @first_day.next_month), class:"btn btn-primary", id:"click2" %></td>
+          
           <td>指定時間 : <%= format_basic_info(@user.work_time) %></td>
           <td colspan="3">基本時間 : <%= format_basic_info(@user.basic_time) %></td>
           <td>月初 : <%= l(@first_day, format: :short) %></td>
@@ -24,10 +25,10 @@
     </table>
   </div>
   <div class="btn-user-show">
-    <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class:"btn btn-success" %>
+    <%= link_to "勤怠を編集", attendances_edit_one_month_user_path(date: @first_day), class:"btn btn-success margin-bottom" %>
   </div>
   <div>
-    <table class="table table-bordered table-condensed table-hover table-striped " id="table-attendances">
+    <table class="table table-bordered table-condensed table-hover table-striped" id="table-attendances">
       <thead>
         <tr>
           <th rowspan="2">日付</th>
