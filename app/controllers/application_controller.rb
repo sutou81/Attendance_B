@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  require 'rounding'
   protect_from_forgery with: :exception
   include SessionsHelper
   include ActionView::Helpers::UrlHelper

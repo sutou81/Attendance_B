@@ -9,7 +9,7 @@
           時間管理表　
           <%= link_to "▶", user_path(date: @first_day.next_month), class:"btn btn-primary", id:"click2" %></td>
           
-          <td>指定時間 : <%= format_basic_info(@user.work_time) %></td>
+          <td>指定時間：<%= format_basic_info(@user.work_time) %></td>
           <td colspan="3">基本時間 : <%= format_basic_info(@user.basic_time) %></td>
           <td>月初 : <%= l(@first_day, format: :short) %></td>
         </tr>
@@ -62,7 +62,7 @@
             <% end %>  
           </td>
           <td><%= l(day.started_at, format: :time1) if day.started_at.present? %></td>
-          <td><%= l(day.started_at, format: :time2) if day.started_at.present? %></td>
+          <td><%= l(day.started_at.round_to(15.minutes), format: :time2) if day.started_at.present? %></td>
           <td><%= l(day.finished_at, format: :time1) if day.finished_at.present? %></td>
           <td><%= l(day.finished_at, format: :time2) if day.finished_at.present? %></td>
           <td><!-- 出社時間と退社時間が存在するか確認した上でメソッドを呼び出し在社時間を計算

@@ -121,4 +121,12 @@ module SessionsHelper
       redirect_to root_url
     end
   end 
+  
+  def finished_at_is_invalid_without_a_finished_at
+    
+      if started_at.present? && finished_at.blank?
+        errors.add(:finished_at, "が必要です")
+      end
+    
+  end
 end
