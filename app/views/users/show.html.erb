@@ -62,9 +62,9 @@
             <% end %>  
           </td>
           <td><%= l(day.started_at, format: :time1) if day.started_at.present? %></td>
-          <td><%= l(day.started_at.round_to(15.minutes), format: :time2) if day.started_at.present? %></td>
+          <td><%= l(day.started_at.floor_to(15.minutes), format: :time2) if day.started_at.present? %></td>
           <td><%= l(day.finished_at, format: :time1) if day.finished_at.present? %></td>
-          <td><%= l(day.finished_at, format: :time2) if day.finished_at.present? %></td>
+          <td><%= l(day.finished_at.floor_to(15.minutes), format: :time2) if day.finished_at.present? %></td>
           <td><!-- 出社時間と退社時間が存在するか確認した上でメソッドを呼び出し在社時間を計算
               1日の在社時間を出すと共に累計時間も計算してる -->
             <% if day.started_at.present? && day.finished_at.present? %>

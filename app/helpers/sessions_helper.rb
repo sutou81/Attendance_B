@@ -83,7 +83,7 @@ module SessionsHelper
     end
   end
   
-  # 一般ユーザーがUrlを打ち込んで、他の勤怠ページにアクセスするのを制限
+  # 一般ユーザーがUrlを打ち込んで、他のユーザーの勤怠ページにアクセスするのを制限
   def show_access_limit
     @user = User.find(params[:id])
     if !current_user.admin?

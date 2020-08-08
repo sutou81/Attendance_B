@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   require 'rounding'
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :logged_in_user, only: [:show, :edit, :update, :destroy, :index, :edit_basic_info, :update_basic_info]
+  before_action :logged_in_user, only: [:edit, :update, :destroy, :index, :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update]
   before_action :show_access_limit, only: :show
   before_action :admin_user, only: [:index, :destroy, :edit_basic_info, :update_basic_info]
@@ -24,8 +24,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in(@user) # 保存成功後、ログインします。
       flash[:success] = "新規作成しました。"
-      redirect_to @user # ←はredirect_to user_url(@user)と同等→ @userの意味するところ：user.id
+      redirect_to user_url(@user) # ←はredirect_to user_url(@user)と同等→ @userの意味するところ：user.id
     else
       render :new
     end
