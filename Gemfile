@@ -18,7 +18,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', require: false
 
 group :development, :test do
-  gem 'sqlite3', '~> 1.3.6', group: :production
+  gem 'sqlite3', '1.3.13'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
